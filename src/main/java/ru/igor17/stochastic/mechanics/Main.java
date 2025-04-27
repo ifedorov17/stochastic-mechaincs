@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.print("Mechanics!!!\n\n");
 
-        System.out.println("\nНачальные условия");
+        System.out.println("\n---Начальные условия---");
 
         //Начальные условия
         final List<Double> t = Stream.of(6.0, 6.0, 1.0, 1.0, 3.5, 3.5, 6.0, 3.5, 1.0).toList();
@@ -25,7 +25,7 @@ public class Main {
         print("y", y);
 
         //Переход к безразмерным переменным
-        System.out.println("\nПереход к безразмерным переменным");
+        System.out.println("\n---Переход к безразмерным переменным---");
         Double mean_t = mean(t);
         Double mean_T = mean(T);
         Double mean_y = mean(y);
@@ -41,6 +41,8 @@ public class Main {
         print("Среднеквадратичное отклонение t", sd_t);
         print("Среднеквадратичное отклонение T", sd_T);
         print("Среднеквадратичное отклонение y", sd_y);
+
+
 
     }
 
