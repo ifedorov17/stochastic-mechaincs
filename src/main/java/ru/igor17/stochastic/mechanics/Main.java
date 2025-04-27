@@ -1,5 +1,8 @@
 package ru.igor17.stochastic.mechanics;
 
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.RealMatrix;
+
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -50,6 +53,9 @@ public class Main {
 
         printHeader("Матрица задачи F");
 
+        RealMatrix F = new Array2DRowRealMatrix(6,9);
+        print("F", F);
+
     }
 
 
@@ -65,6 +71,16 @@ public class Main {
                 }
                 result.append("]");
                 System.out.printf("%s: %s%n", explanation, result);
+            }
+            case RealMatrix m -> {
+                StringBuilder result = new StringBuilder();
+                for (int i = 0; i < m.getRowDimension(); i++) {
+                    for (int j = 0; j < m.getColumnDimension(); j++) {
+                        result.append(String.format("%.5f    ", m.getEntry(i, j)));
+                    }
+                    result.append("\n");
+                }
+                System.out.printf("Матрица %s:%n%s%n", explanation, result);
             }
             default -> throw new UnsupportedOperationException("Unknown type");
         }
