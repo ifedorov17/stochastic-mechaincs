@@ -5,6 +5,7 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConvertUtils {
@@ -26,6 +27,14 @@ public class ConvertUtils {
 
     public static RealVector toRealVector(List<Double> vector) {
         return new ArrayRealVector(toDoubleArray(vector));
+    }
+
+    public static List<Double> realVectorToList(RealVector realVector) {
+        var result = new ArrayList<Double>();
+        for (int i = 0; i < realVector.getDimension(); ++i) {
+            result.add(realVector.getEntry(i));
+        }
+        return result;
     }
 
 }
