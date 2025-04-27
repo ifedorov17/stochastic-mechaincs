@@ -16,6 +16,7 @@ import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.sd;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.realVectorToList;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toDoubleArray;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toRealVector;
+import static ru.igor17.stochastic.mechanics.util.PrintUtils.checkStudentAndPrintResult;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.print;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.printHeader;
 
@@ -107,7 +108,7 @@ public class Main {
         print("betaEstimate", betaEstimate);
 
 
-        printHeader("ПРОВЕРКА МОДЕЛИ НА АДЕКВАТНОСТЬ");
+        printHeader("ПРОВЕРКА МОДЕЛИ НА АДЕКВАТНОСТЬ (gamma = 0.95");
 
         printHeader("Оценка вектора откликов");
         RealVector yEstimate = mulMatrixByVector(F.transpose(), betaEstimate);
@@ -148,14 +149,28 @@ public class Main {
         print("Статистика W", W);
 
         double quantileFisher = 3.8625483576247643;
+        print("Квантиль Фишера", quantileFisher);
 
         if (W < quantileFisher) {
-            printHeader("Гипотеза принимается, W < t_fisher. Модель адекватна");
+            System.out.println("Гипотеза принимается, W < t_fisher. Модель адекватна " + "(" + W + " < " + quantileFisher + ")");
         } else {
-            printHeader("Гипотеза отклоняется, W < t_fisher");
+            System.out.println("Гипотеза отклоняется, W > t_fisher (" + W + " > " + quantileFisher + ")");
         }
 
+        printHeader("ПРОВЕРКА ЗНАЧИМОСТИ КОЭФФИЦИЕНТОВ РЕГРЕССИИ (gamma = 0.975)");
+        List<Double> W2 = new ArrayList<>();
+        for (int i = 0; i < betaEstimate.getDimension(); i++) {
+            W2.add(Math.abs(betaEstimate.getEntry(i))/(Math.sqrt(s2_ost*C.getEntry(i,i))));
+        }
+        print("Статистика W2", W2);
+        var quantileStudent = 3.182446305284263;
+        print("Квантиль Стьюдента (0.975)", quantileStudent);
+        checkStudentAndPrintResult(W2, quantileStudent);
 
+        printHeader("ПРОВЕРКА ЗНАЧИМОСТИ КОЭФФИЦИЕНТОВ РЕГРЕССИИ (gamma = 0.8)");
+        var quantileStudent2 = 1.637744357215907;
+        print("Квантиль Стьюдента", quantileStudent2);
+        checkStudentAndPrintResult(W2, quantileStudent2);
     }
 
 }
