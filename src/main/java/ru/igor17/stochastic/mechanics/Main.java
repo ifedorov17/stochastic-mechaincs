@@ -1,14 +1,15 @@
 package ru.igor17.stochastic.mechanics;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mean;
-import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.sd;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulVectorByComponents;
+import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.sd;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toDoubleArray;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.print;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.printHeader;
@@ -58,7 +59,7 @@ public class Main {
 
         //Модель: y = beta0 + beta1*x1 + beta2*x2 + beta3*x1*x2 + beta4*x1^2 + beta5*x2^2 + eps
 
-        printHeader("Матрица задачи F");
+        printHeader("Матрица задачи");
 
         RealMatrix F = new Array2DRowRealMatrix(6,9);
 
@@ -72,9 +73,13 @@ public class Main {
 
         print("F", F);
 
-        printHeader("Информационная матрица G");
+        printHeader("Информационная матрица");
         RealMatrix G = F.multiply(F.transpose());
         print("G", G);
+
+        printHeader("Матрица ошибок");
+        RealMatrix C = MatrixUtils.inverse(G);
+        print("C", C);
 
     }
 
