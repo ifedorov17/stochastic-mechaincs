@@ -5,14 +5,15 @@ import java.util.stream.Stream;
 
 public class Main {
 
+    private static final int N = 9;
+    private static final int k = 6;
+
     public static void main(String[] args) {
         System.out.print("Mechanics!!!\n\n");
 
         System.out.println("\nНачальные условия");
 
         //Начальные условия
-        int N = 9;
-        int k = 6;
         final List<Double> t = Stream.of(6.0, 6.0, 1.0, 1.0, 3.5, 3.5, 6.0, 3.5, 1.0).toList();
         final List<Double> T = Stream.of(145.0, 70.0, 145.0, 70.0, 107.5, 145.0, 107.5, 70.0, 107.5).toList();
         final List<Double> y = Stream.of(72.0, 63.0, 57.0, 49.0, 61., 67., 64., 56., 52.).toList();
@@ -32,6 +33,14 @@ public class Main {
         print("Среднее t", mean_t);
         print("Среднее T", mean_T);
         print("Среднее y", mean_y);
+
+        Double sd_t = sd(t);
+        Double sd_T = sd(T);
+        Double sd_y = sd(y);
+
+        print("Среднеквадратичное отклонение t", sd_t);
+        print("Среднеквадратичное отклонение T", sd_T);
+        print("Среднеквадратичное отклонение y", sd_y);
 
     }
 
@@ -55,6 +64,12 @@ public class Main {
 
     private static Double mean(final List<Double> vector) {
         return vector.stream().mapToDouble(v -> v).average().orElse(0d);
+    }
+
+    private static Double sd(final List<Double> vector) {
+        Double mean = mean(vector);
+        double sumSqrt = vector.stream().mapToDouble(v -> (v - mean)*(v - mean)).sum();
+        return Math.sqrt(sumSqrt/N);
     }
 
 }
