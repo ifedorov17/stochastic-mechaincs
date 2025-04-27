@@ -35,6 +35,8 @@ public class Main {
         print("T", T);
         print("y", y);
 
+        printHeader("РЕГРЕССИЯ");
+
         printHeader("Переход к безразмерным переменным");
         Double mean_t = mean(t);
         Double mean_T = mean(T);
@@ -89,6 +91,13 @@ public class Main {
         RealVector betaEstimate = mulMatrixByVector(CF, toRealVector(yy));
 
         print("betaEstimate", betaEstimate);
+
+
+        printHeader("ПРОВЕРКА МОДЕЛИ НА АДЕКВАТНОСТЬ");
+
+        printHeader("Оценка вектора откликов");
+        RealVector yEstimate = mulMatrixByVector(F.transpose(), betaEstimate);
+        print("y", yEstimate);
     }
 
 }
