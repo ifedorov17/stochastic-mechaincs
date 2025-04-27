@@ -6,7 +6,9 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import ru.igor17.stochastic.mechanics.util.ArithmeticUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mean;
@@ -21,8 +23,20 @@ import static ru.igor17.stochastic.mechanics.util.PrintUtils.printHeader;
 
 public class Main {
 
+    /**
+     * Размерность векторов параметров
+     */
     public static final int N = 9;
+
+    /**
+     * Количество коэффициентов в постулируемой модели
+     */
     public static final int k = 6;
+
+    /**
+     * Количество дополнительных измерений
+     */
+    public static final int n = 6;
 
     public static void main(String[] args) {
 
@@ -102,9 +116,24 @@ public class Main {
         print("y", yEstimate);
 
         printHeader("Построение статистики");
-        Double Q_ost = ArithmeticUtils.Q_ost(realVectorToList(yEstimate), yy);
+        double Q_ost = ArithmeticUtils.Q_ost(realVectorToList(yEstimate), yy);
         print("Остаточная сумма квадратов", Q_ost);
-        print("Остаточная выборочная дисперсия", Q_ost/(N-k));
+        double s2_ost = Q_ost/(N-k);
+        print("Остаточная выборочная дисперсия", s2_ost);
+
+        printHeader("Дополнительные измерения");
+        final List<Double> yDop = Stream.of(61.5, 60.0, 61.0, 63.1, 60.5, 63., 61.5, 59.9, 61.2, 62.).toList();
+        print("Доп. измерения yDop", yDop);
+
+        printHeader("Нормирование измерений");
+        var mean_yDop = mean(yDop);
+        print("Среднее yDop", mean_yDop);
+        var sd_yDop = Math.sqrt(sd(yDop));
+        print("СКО yDop", sd_yDop);
+
+        List<Double> yNorm = new ArrayList<>();
+        IntStream.range(0, yDop.size()).forEach(i -> yNorm.add((yDop.get(i) - mean_yDop)/sd_yDop));
+        print("Нормированные измерения", yNorm);
     }
 
 }
