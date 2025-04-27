@@ -9,11 +9,8 @@ public class Main {
     private static final int k = 6;
 
     public static void main(String[] args) {
-        System.out.print("Mechanics!!!\n\n");
 
-        System.out.println("\n---Начальные условия---");
-
-        //Начальные условия
+        printHeader("Начальные условия");
         final List<Double> t = Stream.of(6.0, 6.0, 1.0, 1.0, 3.5, 3.5, 6.0, 3.5, 1.0).toList();
         final List<Double> T = Stream.of(145.0, 70.0, 145.0, 70.0, 107.5, 145.0, 107.5, 70.0, 107.5).toList();
         final List<Double> y = Stream.of(72.0, 63.0, 57.0, 49.0, 61., 67., 64., 56., 52.).toList();
@@ -24,8 +21,7 @@ public class Main {
         print("T", T);
         print("y", y);
 
-        //Переход к безразмерным переменным
-        System.out.println("\n---Переход к безразмерным переменным---");
+        printHeader("Переход к безразмерным переменным");
         Double mean_t = mean(t);
         Double mean_T = mean(T);
         Double mean_y = mean(y);
@@ -50,6 +46,10 @@ public class Main {
         print("Безразмерное T (x2)", x2);
         print("Безразмерное y", yy);
 
+        //Модель: y = beta0 + beta1*x1 + beta2*x2 + beta3*x1*x2 + beta4*x1^2 + beta5*x2^2 + eps
+
+        printHeader("Матрица задачи F");
+
     }
 
 
@@ -68,6 +68,10 @@ public class Main {
             }
             default -> throw new UnsupportedOperationException("Unknown type");
         }
+    }
+
+    private static void printHeader(String header) {
+        System.out.printf("%n%n---%s---%n%n", header);
     }
 
     private static Double mean(final List<Double> vector) {
