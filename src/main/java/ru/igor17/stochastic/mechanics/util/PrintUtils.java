@@ -5,6 +5,7 @@ import org.apache.commons.math3.linear.RealVector;
 
 import java.util.List;
 
+
 public class PrintUtils {
 
     private static final String REAL_FORMAT = "%10.5f";
@@ -54,6 +55,12 @@ public class PrintUtils {
             } else {
                 System.out.printf("W2_%d < t_student (%.5f < %.5f), beta_%d не значим %n", i, results.get(i), quantile, i);
             }
+        }
+    }
+
+    public static void printConfidenceInterval(List<Double> estimates, List<Double> deltas, Double quantile) {
+        for (int i = 0; i < estimates.size(); i++) {
+            System.out.printf("%.5f < beta_%d < %.5f%n", estimates.get(i) - deltas.get(i), i, estimates.get(i) + deltas.get(i));
         }
     }
 
