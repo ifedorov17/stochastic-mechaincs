@@ -3,6 +3,7 @@ package ru.igor17.stochastic.mechanics.util;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -36,6 +37,14 @@ public class ArithmeticUtils {
     public static RealVector mulMatrixByVector(final RealMatrix matrix, final RealVector vector) {
         RealMatrix columnMatrix = toVectorColumnMatrix(vector);
         return matrix.multiply(columnMatrix).getColumnVector(0);
+    }
+
+    public static List<Double> deltasBeta(double studentQuantile, double s2_ost, final RealMatrix C) {
+        List<Double> deltaVector = new ArrayList<>();
+        for (int i = 0; i < C.getRowDimension(); i++) {
+            deltaVector.add(Math.sqrt(s2_ost * C.getEntry(i, i)) * studentQuantile);
+        }
+        return deltaVector;
     }
 
 }

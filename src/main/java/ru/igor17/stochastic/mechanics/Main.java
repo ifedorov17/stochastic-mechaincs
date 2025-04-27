@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.deltasBeta;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mean;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulMatrixByVector;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulVectorByComponents;
@@ -18,6 +19,7 @@ import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toDoubleArray;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toRealVector;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.checkStudentAndPrintResult;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.print;
+import static ru.igor17.stochastic.mechanics.util.PrintUtils.printConfidenceInterval;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.printHeader;
 
 public class Main {
@@ -157,7 +159,7 @@ public class Main {
             System.out.println("Гипотеза отклоняется, W > t_fisher (" + W + " > " + quantileFisher + ")");
         }
 
-        printHeader("ПРОВЕРКА ЗНАЧИМОСТИ КОЭФФИЦИЕНТОВ РЕГРЕССИИ (gamma = 0.975)");
+        printHeader("ПРОВЕРКА ЗНАЧИМОСТИ КОЭФФИЦИЕНТОВ РЕГРЕССИИ (gamma = 0.95)");
         List<Double> W2 = new ArrayList<>();
         for (int i = 0; i < betaEstimate.getDimension(); i++) {
             W2.add(Math.abs(betaEstimate.getEntry(i))/(Math.sqrt(s2_ost*C.getEntry(i,i))));
@@ -168,9 +170,18 @@ public class Main {
         checkStudentAndPrintResult(W2, quantileStudent);
 
         printHeader("ПРОВЕРКА ЗНАЧИМОСТИ КОЭФФИЦИЕНТОВ РЕГРЕССИИ (gamma = 0.8)");
-        var quantileStudent2 = 1.637744357215907;
-        print("Квантиль Стьюдента", quantileStudent2);
-        checkStudentAndPrintResult(W2, quantileStudent2);
+        var quantileStudent08 = 1.637744357215907;
+        print("Квантиль Стьюдента", quantileStudent08);
+        checkStudentAndPrintResult(W2, quantileStudent08);
+
+        printHeader("ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ (gamma = 0.8)");
+        var deltaBeta08 = deltasBeta(quantileStudent08, s2_ost, C);
+        printConfidenceInterval(realVectorToList(betaEstimate), deltaBeta08, quantileStudent08);
+
+        printHeader("ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ (gamma = 0.95)");
+        var deltaBeta095 = deltasBeta(quantileStudent, s2_ost, C);
+        printConfidenceInterval(realVectorToList(betaEstimate), deltaBeta095, quantileStudent);
+
     }
 
 }
