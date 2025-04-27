@@ -116,7 +116,9 @@ public class Main {
         print("y", yEstimate);
 
         printHeader("Построение статистики");
-        double Q_ost = ArithmeticUtils.Q_ost(realVectorToList(yEstimate), yy);
+        var yEstList = realVectorToList(yEstimate);
+        double Q_ost = IntStream.range(0, yEstList.size())
+                .mapToDouble(i -> (yEstList.get(i) - yy.get(i))*(yEstList.get(i) - yy.get(i))).sum();
         print("Остаточная сумма квадратов", Q_ost);
         double s2_ost = Q_ost/(N-k);
         print("Остаточная выборочная дисперсия", s2_ost);
@@ -134,6 +136,14 @@ public class Main {
         List<Double> yNorm = new ArrayList<>();
         IntStream.range(0, yDop.size()).forEach(i -> yNorm.add((yDop.get(i) - mean_yDop)/sd_yDop));
         print("Нормированные измерения", yNorm);
+
+        var mean_yNorm = mean(yNorm);
+        double sum = 0.;
+        for (int i = 0; i < yNorm.size(); i++) {
+            sum += (yNorm.get(i) - mean_yNorm) * (yNorm.get(i) - mean_yNorm);
+        }
+        var s2 = sum/(n - 1);
+        print("Выборочная дисперсия s2", s2);
     }
 
 }

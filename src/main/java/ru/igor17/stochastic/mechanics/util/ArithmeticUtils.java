@@ -15,7 +15,15 @@ public class ArithmeticUtils {
      * Среднее арифметическое
      */
     public static Double mean(final List<Double> vector) {
-        return vector.stream().mapToDouble(v -> v).average().orElse(0d);
+
+        double sum = 0.0;
+        for (Double v : vector) {
+            sum += v;
+        }
+
+        return sum / vector.size();
+
+        //return vector.stream().mapToDouble(v -> v).average().orElse(0d);
     }
 
     /**
@@ -25,14 +33,6 @@ public class ArithmeticUtils {
         Double mean = mean(vector);
         double sumSqrt = vector.stream().mapToDouble(v -> (v - mean)*(v - mean)).sum();
         return Math.sqrt(sumSqrt/N);
-    }
-
-    /**
-     * Остаточная сумма квадратов
-     */
-    public static double Q_ost(final List<Double> estimated, final List<Double> present) {
-        return  IntStream.range(0, estimated.size())
-                .mapToDouble(i -> (estimated.get(i) - present.get(i)*(estimated.get(i) - present.get(i)))).sum();
     }
 
     public static double[] mulVectorByComponents(final List<Double> vector1, final List<Double> vector2) {
