@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.deltasBeta;
+import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.deltas;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mean;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulMatrixByVector;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulVectorByComponents;
@@ -19,7 +19,8 @@ import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toDoubleArray;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toRealVector;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.checkStudentAndPrintResult;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.print;
-import static ru.igor17.stochastic.mechanics.util.PrintUtils.printConfidenceInterval;
+import static ru.igor17.stochastic.mechanics.util.PrintUtils.printConfidenceIntervalBeta;
+import static ru.igor17.stochastic.mechanics.util.PrintUtils.printConfidenceIntervalY;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.printHeader;
 
 public class Main {
@@ -174,13 +175,23 @@ public class Main {
         print("Квантиль Стьюдента", quantileStudent08);
         checkStudentAndPrintResult(W2, quantileStudent08);
 
-        printHeader("ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ (gamma = 0.8)");
-        var deltaBeta08 = deltasBeta(quantileStudent08, s2_ost, C);
-        printConfidenceInterval(realVectorToList(betaEstimate), deltaBeta08, quantileStudent08);
+        printHeader("ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ для коэффициентов (gamma = 0.95)");
+        var deltaBeta095 = deltas(quantileStudent, s2_ost, C);
+        printConfidenceIntervalBeta(realVectorToList(betaEstimate), deltaBeta095);
 
-        printHeader("ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ (gamma = 0.95)");
-        var deltaBeta095 = deltasBeta(quantileStudent, s2_ost, C);
-        printConfidenceInterval(realVectorToList(betaEstimate), deltaBeta095, quantileStudent);
+        printHeader("ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ для коэффициентов (gamma = 0.8)");
+        var deltaBeta08 = deltas(quantileStudent08, s2_ost, C);
+        printConfidenceIntervalBeta(realVectorToList(betaEstimate), deltaBeta08);
+
+
+        var A = F.transpose().multiply(C).multiply(F);
+        printHeader("ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ для отклика (gamma = 0.95)");
+        var deltaY095 = deltas(quantileStudent, s2_ost, A);
+        printConfidenceIntervalY(realVectorToList(yEstimate), deltaY095);
+
+        printHeader("ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ для отклика (gamma = 0.8)");
+        var deltaY08 = deltas(quantileStudent08, s2_ost, A);
+        printConfidenceIntervalY(realVectorToList(yEstimate), deltaY08);
 
     }
 
