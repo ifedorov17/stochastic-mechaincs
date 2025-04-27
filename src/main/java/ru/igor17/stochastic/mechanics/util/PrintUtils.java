@@ -66,7 +66,7 @@ public class PrintUtils {
 
     public static void printConfidenceIntervalY(List<Double> estimates, List<Double> deltas) {
         for (int i = 0; i < estimates.size(); i++) {
-            System.out.printf("%.5f < beta_%d < %.5f%n", estimates.get(i) - deltas.get(i), i, estimates.get(i) + deltas.get(i));
+            System.out.printf("%.5f < y_%d < %.5f%n", estimates.get(i) - deltas.get(i), i, estimates.get(i) + deltas.get(i));
         }
     }
 
