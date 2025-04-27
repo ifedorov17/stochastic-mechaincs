@@ -15,15 +15,7 @@ public class ArithmeticUtils {
      * Среднее арифметическое
      */
     public static Double mean(final List<Double> vector) {
-
-        double sum = 0.0;
-        for (Double v : vector) {
-            sum += v;
-        }
-
-        return sum / vector.size();
-
-        //return vector.stream().mapToDouble(v -> v).average().orElse(0d);
+        return vector.stream().mapToDouble(v -> v).average().orElse(0d);
     }
 
     /**

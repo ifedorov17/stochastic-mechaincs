@@ -4,8 +4,6 @@ import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
-import ru.igor17.stochastic.mechanics.util.ArithmeticUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -139,11 +137,25 @@ public class Main {
 
         var mean_yNorm = mean(yNorm);
         double sum = 0.;
-        for (int i = 0; i < yNorm.size(); i++) {
-            sum += (yNorm.get(i) - mean_yNorm) * (yNorm.get(i) - mean_yNorm);
+        for (Double aDouble : yNorm) {
+            sum += (aDouble - mean_yNorm) * (aDouble - mean_yNorm);
         }
         var s2 = sum/(n - 1);
         print("Выборочная дисперсия s2", s2);
+
+        printHeader("Статистика");
+        double W = s2_ost/s2;
+        print("Статистика W", W);
+
+        double quantileFisher = 3.8625483576247643;
+
+        if (W < quantileFisher) {
+            printHeader("Гипотеза принимается, W < t_fisher. Модель адекватна");
+        } else {
+            printHeader("Гипотеза отклоняется, W < t_fisher");
+        }
+
+
     }
 
 }
