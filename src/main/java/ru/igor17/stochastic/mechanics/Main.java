@@ -8,6 +8,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.print("Mechanics!!!\n\n");
 
+        System.out.println("\nНачальные условия");
+
         //Начальные условия
         int N = 9;
         int k = 6;
@@ -15,23 +17,38 @@ public class Main {
         final List<Double> T = Stream.of(145.0, 70.0, 145.0, 70.0, 107.5, 145.0, 107.5, 70.0, 107.5).toList();
         final List<Double> y = Stream.of(72.0, 63.0, 57.0, 49.0, 61., 67., 64., 56., 52.).toList();
 
-        System.out.println("N: " + N);
-        System.out.println("K: " + k);
-
+        print("N", N);
+        print("K", k);
         print("t", t);
         print("T", T);
         print("y", y);
 
         //Переход к безразмерным переменным
+        System.out.println("\nПереход к безразмерным переменным");
+        Double mean_t = mean(t);
+        Double mean_T = mean(T);
+        Double mean_y = mean(y);
 
+        print("Среднее t", mean_t);
+        print("Среднее T", mean_T);
+        print("Среднее y", mean_y);
 
     }
 
 
     private static void print(String explanation, final Object arg) {
         switch (arg) {
-            case Double d -> System.out.printf("%s: %s", explanation, (Double) d);
-            case List l -> System.out.printf("%s: %s%n", explanation, l.toString());
+            case Double d -> System.out.printf("%s: %.5f%n", explanation, d);
+            case Integer i -> System.out.printf("%s: %d%n", explanation, i);
+            case List l -> {
+                StringBuilder result = new StringBuilder("[");
+                for (int i = 0; i < l.size(); i++) {
+                    result.append(String.format("%.5f", (Double) l.get(i)));
+                    if (i < l.size() - 1) result.append(", ");
+                }
+                result.append("]");
+                System.out.printf("%s: %s%n", explanation, result);
+            }
             default -> throw new UnsupportedOperationException("Unknown type");
         }
     }
