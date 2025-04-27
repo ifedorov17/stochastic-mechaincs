@@ -44,7 +44,7 @@ public class PrintUtils {
     }
 
     public static void printHeader(String header) {
-        System.out.printf("%n%n---%s---%n%n", header);
+        System.out.printf("%n%n---%s---%n", header);
     }
 
 }
