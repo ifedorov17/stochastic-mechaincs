@@ -18,17 +18,26 @@ public class Main {
         System.out.println("N: " + N);
         System.out.println("K: " + k);
 
-        vectorPrint("t", t);
-        vectorPrint("T", T);
-        vectorPrint("y", y);
+        print("t", t);
+        print("T", T);
+        print("y", y);
 
         //Переход к безразмерным переменным
 
 
     }
 
-    private static void vectorPrint(String explanation, final List<Double> vector) {
-        System.out.printf("%s: %s%n", explanation, vector.toString());
+
+    private static void print(String explanation, final Object arg) {
+        switch (arg) {
+            case Double d -> System.out.printf("%s: %s", explanation, (Double) d);
+            case List l -> System.out.printf("%s: %s%n", explanation, l.toString());
+            default -> throw new UnsupportedOperationException("Unknown type");
+        }
+    }
+
+    private static Double mean(final List<Double> vector) {
+        return vector.stream().mapToDouble(v -> v).average().orElse(0d);
     }
 
 }
