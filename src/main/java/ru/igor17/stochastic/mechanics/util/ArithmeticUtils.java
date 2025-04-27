@@ -39,10 +39,10 @@ public class ArithmeticUtils {
         return matrix.multiply(columnMatrix).getColumnVector(0);
     }
 
-    public static List<Double> deltasBeta(double studentQuantile, double s2_ost, final RealMatrix C) {
+    public static List<Double> deltas(double studentQuantile, double s2_ost, final RealMatrix A) {
         List<Double> deltaVector = new ArrayList<>();
-        for (int i = 0; i < C.getRowDimension(); i++) {
-            deltaVector.add(Math.sqrt(s2_ost * C.getEntry(i, i)) * studentQuantile);
+        for (int i = 0; i < A.getColumnDimension(); i++) {
+            deltaVector.add(Math.sqrt(s2_ost * A.getEntry(i, i)) * studentQuantile);
         }
         return deltaVector;
     }
