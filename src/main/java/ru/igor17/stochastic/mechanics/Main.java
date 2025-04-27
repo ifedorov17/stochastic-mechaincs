@@ -89,7 +89,7 @@ public class Main {
         RealMatrix CF = C.multiply(F);
         RealVector betaEstimate = mulMatrixByVector(CF, toRealVector(yy));
 
-        System.out.println(betaEstimate);
+        print("betaEstimate", betaEstimate);
     }
 
 }
