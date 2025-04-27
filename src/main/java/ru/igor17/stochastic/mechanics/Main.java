@@ -72,6 +72,10 @@ public class Main {
 
         print("F", F);
 
+        printHeader("Информационная матрица G");
+        RealMatrix G = F.multiply(F.transpose());
+        print("G", G);
+
     }
 
 }
