@@ -47,4 +47,14 @@ public class PrintUtils {
         System.out.printf("%n%n---%s---%n", header);
     }
 
+    public static void checkStudentAndPrintResult(List<Double> results, Double quantile) {
+        for (int i = 0; i < results.size(); i++) {
+            if (results.get(i) >= quantile) {
+                System.out.printf("W2_%d > t_student (%.5f > %.5f), beta_%d значим %n", i, results.get(i), quantile, i);
+            } else {
+                System.out.printf("W2_%d < t_student (%.5f < %.5f), beta_%d не значим %n", i, results.get(i), quantile, i);
+            }
+        }
+    }
+
 }
