@@ -6,14 +6,16 @@ import org.apache.commons.math3.linear.RealMatrix;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mean;
+import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.sd;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toDoubleArray;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.print;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.printHeader;
 
 public class Main {
 
-    private static final int N = 9;
-    private static final int k = 6;
+    public static final int N = 9;
+    public static final int k = 6;
 
     public static void main(String[] args) {
 
@@ -66,16 +68,6 @@ public class Main {
 
         print("F", F);
 
-    }
-
-    private static Double mean(final List<Double> vector) {
-        return vector.stream().mapToDouble(v -> v).average().orElse(0d);
-    }
-
-    private static Double sd(final List<Double> vector) {
-        Double mean = mean(vector);
-        double sumSqrt = vector.stream().mapToDouble(v -> (v - mean)*(v - mean)).sum();
-        return Math.sqrt(sumSqrt/N);
     }
 
 }
