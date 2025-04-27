@@ -42,7 +42,13 @@ public class Main {
         print("Среднеквадратичное отклонение T", sd_T);
         print("Среднеквадратичное отклонение y", sd_y);
 
+        var x1 = t.stream().map(ti -> (ti - mean_t)/sd_t).toList();
+        var x2 = T.stream().map(Ti -> (Ti - mean_T)/sd_T).toList();
+        var yy = y.stream().map(yi -> (yi - mean_y)/sd_y).toList();
 
+        print("Безразмерное t (x1)", x1);
+        print("Безразмерное T (x2)", x2);
+        print("Безразмерное y", yy);
 
     }
 
