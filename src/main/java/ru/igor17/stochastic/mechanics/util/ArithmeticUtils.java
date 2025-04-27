@@ -1,9 +1,13 @@
 package ru.igor17.stochastic.mechanics.util;
 
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
+
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static ru.igor17.stochastic.mechanics.Main.N;
+import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toVectorColumnMatrix;
 
 public class ArithmeticUtils {
 
@@ -21,6 +25,11 @@ public class ArithmeticUtils {
         return IntStream.range(0, vector1.size())
                 .mapToDouble(i -> vector1.get(i) * vector2.get(i))
                 .toArray();
+    }
+
+    public static RealVector mulMatrixByVector(final RealMatrix matrix, final RealVector vector) {
+        RealMatrix columnMatrix = toVectorColumnMatrix(vector);
+        return matrix.multiply(columnMatrix).getColumnVector(0);
     }
 
 }

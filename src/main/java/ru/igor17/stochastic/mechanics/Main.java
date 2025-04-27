@@ -1,16 +1,20 @@
 package ru.igor17.stochastic.mechanics;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mean;
+import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulMatrixByVector;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulVectorByComponents;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.sd;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toDoubleArray;
+import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toRealVector;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.print;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.printHeader;
 
@@ -81,6 +85,11 @@ public class Main {
         RealMatrix C = MatrixUtils.inverse(G);
         print("C", C);
 
+        printHeader("Вектор оценок");
+        RealMatrix CF = C.multiply(F);
+        RealVector betaEstimate = mulMatrixByVector(CF, toRealVector(yy));
+
+        System.out.println(betaEstimate);
     }
 
 }
