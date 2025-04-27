@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mean;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.sd;
+import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulVectorByComponents;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toDoubleArray;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.print;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.printHeader;
@@ -65,6 +66,9 @@ public class Main {
         F.setRow(0, row0);
         F.setRow(1, toDoubleArray(x1));
         F.setRow(2, toDoubleArray(x2));
+        F.setRow(3, mulVectorByComponents(x1, x2));
+        F.setRow(4, mulVectorByComponents(x1, x1));
+        F.setRow(5, mulVectorByComponents(x2, x2));
 
         print("F", F);
 
