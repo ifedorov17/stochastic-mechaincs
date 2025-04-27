@@ -4,6 +4,7 @@ import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import ru.igor17.stochastic.mechanics.util.ArithmeticUtils;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -12,6 +13,7 @@ import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mean;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulMatrixByVector;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.mulVectorByComponents;
 import static ru.igor17.stochastic.mechanics.util.ArithmeticUtils.sd;
+import static ru.igor17.stochastic.mechanics.util.ConvertUtils.realVectorToList;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toDoubleArray;
 import static ru.igor17.stochastic.mechanics.util.ConvertUtils.toRealVector;
 import static ru.igor17.stochastic.mechanics.util.PrintUtils.print;
@@ -98,6 +100,11 @@ public class Main {
         printHeader("Оценка вектора откликов");
         RealVector yEstimate = mulMatrixByVector(F.transpose(), betaEstimate);
         print("y", yEstimate);
+
+        printHeader("Построение статистики");
+        Double Q_ost = ArithmeticUtils.Q_ost(realVectorToList(yEstimate), yy);
+        print("Остаточная сумма квадратов", Q_ost);
+        print("Остаточная выборочная дисперсия", Q_ost/(N-k));
     }
 
 }
